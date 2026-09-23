@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formularios Técnicos SUNAPA</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- ============================================================
+         MENÚ PRINCIPAL
+         ============================================================ -->
+    <div class="container view" id="home-view">
+        <img src="assets/img/Header sunapajpg.jpg" alt="SUNAPA" class="logo-header">
+        <h2>Formularios Técnicos</h2>
+        <div class="menu-grid">
+            <button type="button" class="menu-card" data-target="ficha">
+                <span class="menu-card-title">Informe AI / ET / PF</span>
+                <span class="menu-card-desc">Arranque inicial, entrega técnica y prueba de funcionamiento con carga</span>
+            </button>
+            <button type="button" class="menu-card" data-target="acta">
+                <span class="menu-card-title">Acta de Entrega y Recepción</span>
+                <span class="menu-card-desc">Instalación mecánica, trabajos realizados y parámetros de prueba</span>
+            </button>
+            <button type="button" class="menu-card" data-target="previo">
+                <span class="menu-card-title">Checklist Previo a ET / PF</span>
+                <span class="menu-card-desc">Condiciones a confirmar con el cliente antes de la visita</span>
+            </button>
+            <button type="button" class="menu-card" data-target="vt">
+                <span class="menu-card-title">Informe de Visita Técnica</span>
+                <span class="menu-card-desc">Motivo, lo reportado, lo encontrado y lo realizado</span>
+            </button>
+            <button type="button" class="menu-card" data-target="ot">
+                <span class="menu-card-title">Orden de Trabajo</span>
+                <span class="menu-card-desc">Mano de obra, repuestos, materiales y movilización</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         FORMULARIO 1: INFORME AI / ET / PF (ficha técnica)
+         ============================================================ -->
+    <div class="container view" id="view-ficha" style="display:none;">
+        <button type="button" class="btn-back">&larr; Menú</button>
+        <h3 class="form-title">Informe de Inspección / Evaluación Técnica</h3>
+        <form id="form-ficha">
+            <fieldset>
+                <legend>Datos Generales</legend>
+                <div class="form-group"><label>Cliente a visitar:</label><input type="text" id="ficha-cliente" placeholder="Ej. OMARSA – COVAN"></div>
+                <div class="form-group"><label>Lugar:</label><input type="text" id="ficha-lugar" placeholder="Ej. Taura"></div>
+                <div class="form-group"><label>Fecha:</label><input type="date" id="ficha-fecha"></div>
+                <div class="form-group"><label>Atendidos por:</label><textarea id="ficha-atendidos" rows="2" placeholder="Ej. Adm. Manuel Rivera..."></textarea></div>
+                <div class="form-group"><label>Motor:</label><input type="text" id="ficha-motor" placeholder="Ej. DOOSAN PU086Ti"></div>
+                <div class="form-group"><label>Serie:</label><input type="text" id="ficha-serie" placeholder="Ej. EBPOA008716"></div>
+                <div class="form-group"><label>H/T (Horas de Trabajo):</label><input type="text" id="ficha-ht" value="No Disponible"></div>
+                <div class="form-group"><label>Motivo de la Visita:</label><textarea id="ficha-motivo" rows="2"></textarea></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Revisión inicial</legend>
+                <p style="font-size: 12px; color: #666; margin-bottom: 10px;">Anota el estado (Ej: "Provisional, necesita limpieza" o "Buen estado")</p>
+                <div class="form-group"><label>Tanque de combustible:</label><input type="text" id="ficha-rev-combustible"></div>
+                <div class="form-group"><label>Filtro RACOR:</label><input type="text" id="ficha-rev-racor"></div>
+                <div class="form-group"><label>Tubo de escape:</label><input type="text" id="ficha-rev-escape"></div>
+                <div class="form-group"><label>Sistema de admisión de aire:</label><input type="text" id="ficha-rev-admision"></div>
+                <div class="form-group"><label>Flujo de aire (ventilador a radiador):</label><input type="text" id="ficha-rev-flujo"></div>
+                <div class="form-group"><label>Radiador (aletas):</label><input type="text" id="ficha-rev-radiador"></div>
+                <div class="form-group"><label>Anclaje del motor:</label><input type="text" id="ficha-rev-anclaje"></div>
+                <div class="form-group"><label>Transmisión de Potencia:</label><input type="text" id="ficha-rev-transmision"></div>
+                <div class="form-group"><label>Cables sistema eléctrico:</label><input type="text" id="ficha-rev-cables"></div>
+                <div class="form-group"><label>Tablero de Control:</label><input type="text" id="ficha-rev-tablero"></div>
+                <div class="form-group"><label>Sensores:</label><input type="text" id="ficha-rev-sensores"></div>
+                <div class="form-group"><label>Cubierta de estación de bombeo:</label><input type="text" id="ficha-rev-cubierta"></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Hallazgos y Diagnóstico</legend>
+                <div class="form-group"><label>Se le dio arranque al motor y encontramos:</label><textarea id="ficha-diag-arranque" rows="4"></textarea></div>
+                <div class="form-group"><label>Durante la prueba con carga encontramos:</label><textarea id="ficha-diag-prueba" rows="4"></textarea></div>
+                <div class="form-group"><label>Recomendaciones:</label><textarea id="ficha-diag-causas" rows="4"></textarea></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Resultados PF c/Carga (30 min)</legend>
+                <div class="form-group"><label>Presión Ac. (Mpa):</label><input type="text" id="ficha-pf-presion"></div>
+                <div class="form-group"><label>Temp. Aceite Motor (°C):</label><input type="text" id="ficha-pf-aceite"></div>
+                <div class="form-group"><label>Temp. Agua Retorno del Radiador (°C):</label><input type="text" id="ficha-pf-agua-del"></div>
+                <div class="form-group"><label>Temp. Agua Retorno al Radiador (°C):</label><input type="text" id="ficha-pf-agua-al"></div>
+                <div class="form-group"><label>Temp. Gases de Escape Turbo (°C):</label><input type="text" id="ficha-pf-gases"></div>
+                <div class="form-group"><label>Temp. Rodamientos Embrague (°C):</label><input type="text" id="ficha-pf-rodamientos"></div>
+                <div class="form-group"><label>Fuerza Enganche Embrague (Nm):</label><input type="text" id="ficha-pf-fuerza"></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Trabajos a Realizar</legend>
+                <div class="form-group"><label>MOTOR (Detallar desmontaje, limpieza, calibración):</label><textarea id="ficha-trabajos-motor" rows="5"></textarea></div>
+                <div class="form-group"><label>SISTEMA ELÉCTRICO:</label><textarea id="ficha-trabajos-electrico" rows="4"></textarea></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Fotografías</legend>
+                <div class="form-group">
+                    <label>Añadir fotos de evidencia (puedes elegir varias):</label>
+                    <input type="file" id="ficha-foto" data-form="ficha" accept="image/*" capture="environment" multiple>
+                    <div class="photo-gallery" id="gallery-ficha"></div>
+                    <div class="photo-count" id="photo-count-ficha"></div>
+                </div>
+            </fieldset>
+
+            <div class="buttons">
+                <button type="button" class="btn-save" onclick="guardarBorrador('ficha')">Guardar Borrador</button>
+                <button type="button" class="btn-pdf" onclick="generarPDF_ficha()">Generar PDF</button>
+                <button type="button" class="btn-clear" onclick="limpiarFormulario('ficha')">Limpiar Todo</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- ============================================================
+         FORMULARIO 2: ACTA DE ENTREGA Y RECEPCIÓN
+         ============================================================ -->
+    <div class="container view" id="view-acta" style="display:none;">
+        <button type="button" class="btn-back">&larr; Menú</button>
+        <h3 class="form-title">Acta de Entrega y Recepción de Instalación Mecánica y Afines</h3>
+        <form id="form-acta">
+            <fieldset>
+                <legend>Datos Generales</legend>
+                <div class="form-group"><label>Cliente:</label><input type="text" id="acta-cliente"></div>
+                <div class="form-group"><label>Fecha:</label><input type="date" id="acta-fecha"></div>
+                <div class="form-group"><label>Lugar / Ubicación:</label><input type="text" id="acta-lugar"></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Características: Grupo de Bombeo y/o Grupo Electrógeno</legend>
+                <div class="form-row">
+                    <div class="form-group"><label>Marca Motor:</label><input type="text" id="acta-marca-motor"></div>
+                    <div class="form-group"><label>Marca Generador:</label><input type="text" id="acta-marca-generador"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Modelo Motor:</label><input type="text" id="acta-modelo-motor"></div>
+                    <div class="form-group"><label>Modelo Generador:</label><input type="text" id="acta-modelo-generador"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Serie Motor:</label><input type="text" id="acta-serie-motor"></div>
+                    <div class="form-group"><label>Serie Generador:</label><input type="text" id="acta-serie-generador"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Marca Embrague:</label><input type="text" id="acta-marca-embrague"></div>
+                    <div class="form-group"><label>Voltaje:</label><input type="text" id="acta-voltaje"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Modelo Embrague:</label><input type="text" id="acta-modelo-embrague"></div>
+                    <div class="form-group"><label>Amperaje:</label><input type="text" id="acta-amperaje"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Serie Embrague:</label><input type="text" id="acta-serie-embrague"></div>
+                    <div class="form-group"><label>Frecuencia:</label><input type="text" id="acta-frecuencia"></div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Trabajos Realizados: Instalación Mecánica</legend>
+                <div id="acta-checklist-inputs"></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Prueba de Funcionamiento c/Carga — Parámetros Registrados</legend>
+                <div id="acta-params-inputs"></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Observaciones y Recomendaciones</legend>
+                <textarea id="acta-observaciones" rows="4"></textarea>
+            </fieldset>
+
+            <fieldset>
+                <legend>Firmas</legend>
+                <div class="form-group"><label>Profesional Responsable:</label><input type="text" id="acta-profesional" value="Ing. Alejandro Ponce Orces"></div>
+                <div class="signature-block">
+                    <label>Firma del profesional:</label>
+                    <canvas class="signature-pad" id="acta-profesional-firma" data-sig-form="acta" width="600" height="180"></canvas>
+                    <div class="signature-actions"><button type="button" class="btn-clear-sig" data-clear-target="acta-profesional-firma">Limpiar firma</button></div>
+                </div>
+
+                <div class="form-group" style="margin-top:20px;"><label>Conformidad del Cliente (nombre):</label><input type="text" id="acta-cliente-nombre"></div>
+                <div class="signature-block">
+                    <label>Firma del cliente:</label>
+                    <canvas class="signature-pad" id="acta-cliente-firma" data-sig-form="acta" width="600" height="180"></canvas>
+                    <div class="signature-actions"><button type="button" class="btn-clear-sig" data-clear-target="acta-cliente-firma">Limpiar firma</button></div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Fotografías</legend>
+                <div class="form-group">
+                    <label>Añadir fotos de evidencia (puedes elegir varias):</label>
+                    <input type="file" id="acta-foto" data-form="acta" accept="image/*" capture="environment" multiple>
+                    <div class="photo-gallery" id="gallery-acta"></div>
+                    <div class="photo-count" id="photo-count-acta"></div>
+                </div>
+            </fieldset>
+
+            <div class="buttons">
+                <button type="button" class="btn-save" onclick="guardarBorrador('acta')">Guardar Borrador</button>
+                <button type="button" class="btn-pdf" onclick="generarPDF_acta()">Generar PDF</button>
+                <button type="button" class="btn-clear" onclick="limpiarFormulario('acta')">Limpiar Todo</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- ============================================================
+         FORMULARIO 3: CHECKLIST PREVIO A ET / PF
+         ============================================================ -->
+    <div class="container view" id="view-previo" style="display:none;">
+        <button type="button" class="btn-back">&larr; Menú</button>
+        <h3 class="form-title">Condiciones Previas a la Entrega Técnica y Prueba con Carga</h3>
+        <form id="form-previo">
+            <fieldset>
+                <legend>Datos Generales</legend>
+                <div class="form-group"><label>Cliente:</label><input type="text" id="previo-cliente"></div>
+                <div class="form-group"><label>Fecha:</label><input type="date" id="previo-fecha"></div>
+                <div class="form-group"><label>Lugar:</label><input type="text" id="previo-lugar"></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Favor revisar que:</legend>
+                <div id="previo-checklist-inputs"></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Observaciones</legend>
+                <textarea id="previo-observaciones" rows="4"></textarea>
+            </fieldset>
+
+            <fieldset>
+                <legend>Fotografías</legend>
+                <div class="form-group">
+                    <label>Añadir fotos de evidencia (puedes elegir varias):</label>
+                    <input type="file" id="previo-foto" data-form="previo" accept="image/*" capture="environment" multiple>
+                    <div class="photo-gallery" id="gallery-previo"></div>
+                    <div class="photo-count" id="photo-count-previo"></div>
+                </div>
+            </fieldset>
+
+            <div class="buttons">
+                <button type="button" class="btn-save" onclick="guardarBorrador('previo')">Guardar Borrador</button>
+                <button type="button" class="btn-pdf" onclick="generarPDF_previo()">Generar PDF</button>
+                <button type="button" class="btn-clear" onclick="limpiarFormulario('previo')">Limpiar Todo</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- ============================================================
+         FORMULARIO 4: INFORME DE VISITA TÉCNICA
+         ============================================================ -->
+    <div class="container view" id="view-vt" style="display:none;">
+        <button type="button" class="btn-back">&larr; Menú</button>
+        <h3 class="form-title">Informe de Visita Técnica</h3>
+        <form id="form-vt">
+            <fieldset>
+                <legend>Datos Generales</legend>
+                <div class="form-group"><label>Cliente:</label><input type="text" id="vt-cliente"></div>
+                <div class="form-group"><label>Fecha:</label><input type="date" id="vt-fecha"></div>
+                <div class="form-group"><label>Lugar:</label><input type="text" id="vt-lugar"></div>
+                <div class="form-row">
+                    <div class="form-group"><label>Motor:</label><input type="text" id="vt-motor"></div>
+                    <div class="form-group"><label>Serie:</label><input type="text" id="vt-serie"></div>
+                    <div class="form-group"><label>H/T:</label><input type="text" id="vt-ht"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Vendido:</label>
+                        <select id="vt-vendido">
+                            <option value="">-</option>
+                            <option value="Sí">Sí</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Factura:</label><input type="text" id="vt-factura"></div>
+                    <div class="form-group"><label>Estado:</label><input type="text" id="vt-estado"></div>
+                </div>
+                <div class="form-group"><label>Motivo de la Visita:</label><textarea id="vt-motivo" rows="2"></textarea></div>
+                <div class="form-group"><label>Atendidos por:</label><textarea id="vt-atendidos" rows="2"></textarea></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Detalle de la Visita</legend>
+                <div class="form-group"><label>Lo que se reportó:</label><textarea id="vt-reportado" rows="4"></textarea></div>
+                <div class="form-group"><label>Lo que se encontró:</label><textarea id="vt-encontrado" rows="4"></textarea></div>
+                <div class="form-group"><label>Lo que se hizo:</label><textarea id="vt-hecho" rows="4"></textarea></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Fotografías</legend>
+                <div class="form-group">
+                    <label>Añadir fotos de evidencia (puedes elegir varias):</label>
+                    <input type="file" id="vt-foto" data-form="vt" accept="image/*" capture="environment" multiple>
+                    <div class="photo-gallery" id="gallery-vt"></div>
+                    <div class="photo-count" id="photo-count-vt"></div>
+                </div>
+            </fieldset>
+
+            <div class="buttons">
+                <button type="button" class="btn-save" onclick="guardarBorrador('vt')">Guardar Borrador</button>
+                <button type="button" class="btn-pdf" onclick="generarPDF_vt()">Generar PDF</button>
+                <button type="button" class="btn-clear" onclick="limpiarFormulario('vt')">Limpiar Todo</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- ============================================================
+         FORMULARIO 5: ORDEN DE TRABAJO
+         ============================================================ -->
+    <div class="container view" id="view-ot" style="display:none;">
+        <button type="button" class="btn-back">&larr; Menú</button>
+        <h3 class="form-title">Servicio de Mantenimiento Mecánico — Orden de Trabajo</h3>
+        <form id="form-ot">
+            <fieldset>
+                <legend>Datos Generales</legend>
+                <div class="form-group"><label>O/T N°:</label><input type="text" id="ot-numero" placeholder="Ej. 0027"></div>
+                <div class="form-group"><label>Cliente:</label><input type="text" id="ot-cliente"></div>
+                <div class="form-group"><label>Trabajo realizado en:</label><input type="text" id="ot-trabajo-en"></div>
+                <div class="form-group"><label>Daño o falla reportada:</label><textarea id="ot-dano" rows="3"></textarea></div>
+                <div class="form-group"><label>Lugar / Ubicación:</label><input type="text" id="ot-lugar"></div>
+                <div class="form-group"><label>Fecha:</label><input type="date" id="ot-fecha"></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Costos</legend>
+                <div id="ot-cost-inputs"></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Fotografías</legend>
+                <div class="form-group">
+                    <label>Añadir fotos de evidencia (puedes elegir varias):</label>
+                    <input type="file" id="ot-foto" data-form="ot" accept="image/*" capture="environment" multiple>
+                    <div class="photo-gallery" id="gallery-ot"></div>
+                    <div class="photo-count" id="photo-count-ot"></div>
+                </div>
+            </fieldset>
+
+            <div class="buttons">
+                <button type="button" class="btn-save" onclick="guardarBorrador('ot')">Guardar Borrador</button>
+                <button type="button" class="btn-pdf" onclick="generarPDF_ot()">Generar PDF</button>
+                <button type="button" class="btn-clear" onclick="limpiarFormulario('ot')">Limpiar Todo</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- ============================================================
+         PLANTILLAS OCULTAS PARA GENERAR PDF
+         ============================================================ -->
+
+    <!-- PDF: FICHA -->
+    <div id="pdf-container-ficha" style="display:none; background-color:white;">
+        <div id="pdf-content-ficha" class="pdf-content">
+            <img src="assets/img/Header sunapajpg.jpg" alt="Header" style="width:100%; max-height:60px; object-fit:contain;">
+            <p style="font-weight:bold; font-size:14px; margin-top:10px;">Informe de inspección/Evaluacion Tecnica a: <span id="out-ficha-cliente"></span></p>
+            <p><strong>Fecha:</strong> <span id="out-ficha-fecha"></span> &nbsp;&nbsp;&nbsp; <strong>Lugar:</strong> <span id="out-ficha-lugar"></span></p>
+            <p><strong>Motor:</strong> <span id="out-ficha-motor"></span> &nbsp;&nbsp;&nbsp; <strong>Serie:</strong> <span id="out-ficha-serie"></span> &nbsp;&nbsp;&nbsp; <strong>H/T:</strong> <span id="out-ficha-ht"></span></p>
+            <p><strong>Motivo de la Visita:</strong> <span id="out-ficha-motivo"></span></p>
+            <p><strong>Atendidos por:</strong> <span id="out-ficha-atendidos"></span></p>
+
+            <h4 style="margin-top:10px; text-decoration:underline;">Revisión inicial previo al arranque:</h4>
+            <ul style="margin-top:0; padding-left:20px; list-style-type:none;">
+                <li><strong>Tanque de combustible:</strong> <span id="out-ficha-rev-combustible"></span></li>
+                <li><strong>Filtro RACOR:</strong> <span id="out-ficha-rev-racor"></span></li>
+                <li><strong>Tubo de escape:</strong> <span id="out-ficha-rev-escape"></span></li>
+                <li><strong>Sistema de admisión de aire:</strong> <span id="out-ficha-rev-admision"></span></li>
+                <li><strong>Flujo de aire (ventilador-radiador):</strong> <span id="out-ficha-rev-flujo"></span></li>
+                <li><strong>Radiador:</strong> <span id="out-ficha-rev-radiador"></span></li>
+                <li><strong>Anclaje del motor:</strong> <span id="out-ficha-rev-anclaje"></span></li>
+                <li><strong>Transmisión de Potencia:</strong> <span id="out-ficha-rev-transmision"></span></li>
+                <li><strong>Cables sistema eléctrico:</strong> <span id="out-ficha-rev-cables"></span></li>
+                <li><strong>Tablero de Control:</strong> <span id="out-ficha-rev-tablero"></span></li>
+                <li><strong>Sensores:</strong> <span id="out-ficha-rev-sensores"></span></li>
+                <li><strong>Cubierta estación de bombeo:</strong> <span id="out-ficha-rev-cubierta"></span></li>
+            </ul>
+
+            <h4 style="text-decoration:underline;">Hallazgos:</h4>
+            <p><strong>Se le dio arranque al motor y encontramos:</strong><br><span id="out-ficha-diag-arranque" style="white-space:pre-wrap;"></span></p>
+            <p><strong>Durante la prueba de funcionamiento con carga encontramos:</strong><br><span id="out-ficha-diag-prueba" style="white-space:pre-wrap;"></span></p>
+            <p><strong>Recomendaciones:</strong><br><span id="out-ficha-diag-causas" style="white-space:pre-wrap;"></span></p>
+
+            <h4 style="text-decoration:underline;">Resultados de la PF c/Carga por 30 minutos:</h4>
+            <ul style="margin-top:0; padding-left:20px; list-style-type:none;">
+                <li><strong>Presión Ac.:</strong> <span id="out-ficha-pf-presion"></span> Mpa</li>
+                <li><strong>Temp. Aceite Motor:</strong> <span id="out-ficha-pf-aceite"></span> °C (Máx 108°C)</li>
+                <li><strong>Temp. Agua Retorno del Radiador:</strong> <span id="out-ficha-pf-agua-del"></span> °C (Δt mín 30°C)</li>
+                <li><strong>Temp. Agua Retorno al Radiador:</strong> <span id="out-ficha-pf-agua-al"></span> °C (Máx 98°C)</li>
+                <li><strong>Temp. Gases de Escape Turbo:</strong> <span id="out-ficha-pf-gases"></span> °C (Máx 550°C)</li>
+                <li><strong>Temp. Rodamientos Embrague:</strong> <span id="out-ficha-pf-rodamientos"></span> °C (Máx 93°C)</li>
+                <li><strong>Fuerza Enganche Embrague:</strong> <span id="out-ficha-pf-fuerza"></span> Nm</li>
+            </ul>
+
+            <h4 style="text-decoration:underline;">TRABAJOS A REALIZAR:</h4>
+            <p><strong>MOTOR:</strong><br><span id="out-ficha-trabajos-motor" style="white-space:pre-wrap;"></span></p>
+            <p><strong>SISTEMA ELÉCTRICO:</strong><br><span id="out-ficha-trabajos-electrico" style="white-space:pre-wrap;"></span></p>
+
+            <p style="font-weight:bold; margin-top:15px;">Fotos de evidencia</p>
+            <div style="text-align:center; margin-top:5px;">
+                <div class="photo-gallery-pdf" id="out-foto-gallery-ficha"></div>
+            </div>
+
+            <div style="margin-top:30px; font-weight:bold; font-size:11px;">
+                <p>Ing. Alejandro Ponce Orces<br>DIV. IND. Talleres<br>Cel. 0999402936</p>
+            </div>
+
+            <div style="position:absolute; bottom:0; width:100%; font-size:9px; color:#333;">
+                <p style="margin:0;">Edificio SUNAPA, Km 3.5 Vía Durán – Boliche, Edificio Napa</p>
+                <p style="margin:0;">Teléfonos: 045099999 Durán – Ecuador</p>
+                <p style="margin:0;"><a href="http://www.napaecuador.com" style="color:blue; text-decoration:underline;">www.napaecuador.com</a></p>
+                <img src="assets/img/footer jpg.png" alt="Footer Marcas" style="width:100%; max-height:50px; object-fit:contain; margin-top:5px;">
+            </div>
+        </div>
+    </div>
+
+    <!-- PDF: ACTA -->
+    <div id="pdf-container-acta" style="display:none; background-color:white;">
+        <div id="pdf-content-acta" class="pdf-content">
+            <img src="assets/img/Header sunapajpg.jpg" alt="Header" style="width:100%; max-height:60px; object-fit:contain;">
+            <p style="font-weight:bold; font-size:14px; margin-top:10px; text-align:center;">ACTA DE ENTREGA Y RECEPCIÓN DE INSTALACIÓN MECÁNICA Y AFINES</p>
+            <p><strong>Cliente:</strong> <span id="out-acta-cliente"></span> &nbsp;&nbsp;&nbsp; <strong>Fecha:</strong> <span id="out-acta-fecha"></span></p>
+            <p><strong>Lugar / Ubicación:</strong> <span id="out-acta-lugar"></span></p>
+
+            <h4 style="text-decoration:underline; margin-top:10px;">Características: Grupo de Bombeo y/o Grupo Electrógeno</h4>
+            <p><strong>Marca Motor:</strong> <span id="out-acta-marca-motor"></span> &nbsp;&nbsp;&nbsp; <strong>Marca Generador:</strong> <span id="out-acta-marca-generador"></span></p>
+            <p><strong>Modelo Motor:</strong> <span id="out-acta-modelo-motor"></span> &nbsp;&nbsp;&nbsp; <strong>Modelo Generador:</strong> <span id="out-acta-modelo-generador"></span></p>
+            <p><strong>Serie Motor:</strong> <span id="out-acta-serie-motor"></span> &nbsp;&nbsp;&nbsp; <strong>Serie Generador:</strong> <span id="out-acta-serie-generador"></span></p>
+            <p><strong>Marca Embrague:</strong> <span id="out-acta-marca-embrague"></span> &nbsp;&nbsp;&nbsp; <strong>Voltaje:</strong> <span id="out-acta-voltaje"></span></p>
+            <p><strong>Modelo Embrague:</strong> <span id="out-acta-modelo-embrague"></span> &nbsp;&nbsp;&nbsp; <strong>Amperaje:</strong> <span id="out-acta-amperaje"></span></p>
+            <p><strong>Serie Embrague:</strong> <span id="out-acta-serie-embrague"></span> &nbsp;&nbsp;&nbsp; <strong>Frecuencia:</strong> <span id="out-acta-frecuencia"></span></p>
+
+            <h4 style="text-decoration:underline; margin-top:10px;">Trabajos Realizados: Instalación Mecánica</h4>
+            <div id="out-acta-checklist"></div>
+
+            <h4 style="text-decoration:underline; margin-top:10px;">Prueba de Funcionamiento c/Carga — Parámetros Registrados</h4>
+            <div id="out-acta-params"></div>
+
+            <h4 style="text-decoration:underline; margin-top:10px;">Observaciones y Recomendaciones</h4>
+            <p style="white-space:pre-wrap;"><span id="out-acta-observaciones"></span></p>
+
+            <p style="font-weight:bold; margin-top:15px;">Fotos de evidencia</p>
+            <div style="text-align:center; margin-top:5px;">
+                <div class="photo-gallery-pdf" id="out-foto-gallery-acta"></div>
+            </div>
+
+            <div style="margin-top:30px; font-size:11px; display:flex; justify-content:space-between; gap:20px;">
+                <div style="text-align:center; flex:1;">
+                    <img id="out-acta-profesional-firma" style="max-width:100%; max-height:70px; display:none; border-bottom:1px solid #333;">
+                    <p style="border-top:1px solid #333; margin-top:2px; padding-top:2px;"><strong>Profesional Responsable</strong><br><span id="out-acta-profesional"></span></p>
+                </div>
+                <div style="text-align:center; flex:1;">
+                    <img id="out-acta-cliente-firma" style="max-width:100%; max-height:70px; display:none; border-bottom:1px solid #333;">
+                    <p style="border-top:1px solid #333; margin-top:2px; padding-top:2px;"><strong>Conformidad del Cliente</strong><br><span id="out-acta-cliente-nombre"></span></p>
+                </div>
+            </div>
+
+            <div style="position:absolute; bottom:0; width:100%; font-size:9px; color:#333;">
+                <p style="margin:0;">Edificio SUNAPA, Km 3.5 Vía Durán – Boliche, Edificio Napa</p>
+                <p style="margin:0;">Teléfonos: 045099999 Durán – Ecuador</p>
+                <p style="margin:0;"><a href="http://www.napaecuador.com" style="color:blue; text-decoration:underline;">www.napaecuador.com</a></p>
+                <img src="assets/img/footer jpg.png" alt="Footer Marcas" style="width:100%; max-height:50px; object-fit:contain; margin-top:5px;">
+            </div>
+        </div>
+    </div>
+
+    <!-- PDF: PREVIO -->
+    <div id="pdf-container-previo" style="display:none; background-color:white;">
+        <div id="pdf-content-previo" class="pdf-content">
+            <img src="assets/img/Header sunapajpg.jpg" alt="Header" style="width:100%; max-height:60px; object-fit:contain;">
+            <p style="font-weight:bold; margin-top:10px;">Estimado Cliente,</p>
+            <p>Para su conocimiento e información, antes de realizar la Entrega Técnica y la Prueba de Funcionamiento con Carga, se necesita que <strong>NOS CONFIRME</strong> que estos componentes o accesorios estén instalados y listos para poder realizar la entrega y activar la Garantía.</p>
+            <p><strong>Cliente:</strong> <span id="out-previo-cliente"></span> &nbsp;&nbsp;&nbsp; <strong>Fecha:</strong> <span id="out-previo-fecha"></span> &nbsp;&nbsp;&nbsp; <strong>Lugar:</strong> <span id="out-previo-lugar"></span></p>
+
+            <h4 style="text-decoration:underline; margin-top:10px;">Favor revisar que:</h4>
+            <div id="out-previo-checklist"></div>
+
+            <h4 style="text-decoration:underline; margin-top:10px;">Observaciones</h4>
+            <p style="white-space:pre-wrap;"><span id="out-previo-observaciones"></span></p>
+
+            <p style="margin-top:10px; font-size:10px;">En el caso de que uno o varios puntos no cumplan las condiciones necesarias para la operación, la GARANTÍA NO PODRÁ ACTIVARSE hasta que se cumpla con las condiciones necesarias para su activación. Si el propietario del motor desea operarlo sin cumplir con dichas condiciones, es bajo responsabilidad única y exclusiva del propietario y cualquier daño que le ocurra al motor no será cubierto.</p>
+
+            <p style="font-weight:bold; margin-top:15px;">Fotos de evidencia</p>
+            <div style="text-align:center; margin-top:5px;">
+                <div class="photo-gallery-pdf" id="out-foto-gallery-previo"></div>
+            </div>
+
+            <div style="margin-top:30px; font-weight:bold; font-size:11px;">
+                <p>Ing. Alejandro Ponce Orces<br>DIV. INDUSTRIAL<br>Soporte Técnico<br>Cel. 0999402936</p>
+            </div>
+
+            <div style="position:absolute; bottom:0; width:100%; font-size:9px; color:#333;">
+                <p style="margin:0;">Edificio SUNAPA, Km 3.5 Vía Durán – Boliche, Edificio Napa</p>
+                <p style="margin:0;">Teléfonos: 045099999 Durán – Ecuador</p>
+                <p style="margin:0;"><a href="http://www.napaecuador.com" style="color:blue; text-decoration:underline;">www.napaecuador.com</a></p>
+                <img src="assets/img/footer jpg.png" alt="Footer Marcas" style="width:100%; max-height:50px; object-fit:contain; margin-top:5px;">
+            </div>
+        </div>
+    </div>
+
+    <!-- PDF: VT -->
+    <div id="pdf-container-vt" style="display:none; background-color:white;">
+        <div id="pdf-content-vt" class="pdf-content">
+            <img src="assets/img/Header sunapajpg.jpg" alt="Header" style="width:100%; max-height:60px; object-fit:contain;">
+            <p style="font-weight:bold; font-size:14px; margin-top:10px;">Informe Visita Técnica a: <span id="out-vt-cliente"></span></p>
+            <p><strong>Fecha:</strong> <span id="out-vt-fecha"></span> &nbsp;&nbsp;&nbsp; <strong>Lugar:</strong> <span id="out-vt-lugar"></span></p>
+            <p><strong>Motor:</strong> <span id="out-vt-motor"></span> &nbsp;&nbsp;&nbsp; <strong>Serie:</strong> <span id="out-vt-serie"></span> &nbsp;&nbsp;&nbsp; <strong>H/T:</strong> <span id="out-vt-ht"></span></p>
+            <p><strong>Vendido:</strong> <span id="out-vt-vendido"></span> &nbsp;&nbsp;&nbsp; <strong>Fact:</strong> <span id="out-vt-factura"></span> &nbsp;&nbsp;&nbsp; <strong>Estado:</strong> <span id="out-vt-estado"></span></p>
+            <p><strong>Motivo de la Visita:</strong> <span id="out-vt-motivo"></span></p>
+            <p><strong>Atendidos por:</strong> <span id="out-vt-atendidos"></span></p>
+
+            <h4 style="text-decoration:underline; margin-top:10px;">Lo que se reportó:</h4>
+            <p style="white-space:pre-wrap;"><span id="out-vt-reportado"></span></p>
+            <h4 style="text-decoration:underline;">Lo que se encontró:</h4>
+            <p style="white-space:pre-wrap;"><span id="out-vt-encontrado"></span></p>
+            <h4 style="text-decoration:underline;">Lo que se hizo:</h4>
+            <p style="white-space:pre-wrap;"><span id="out-vt-hecho"></span></p>
+
+            <p style="font-weight:bold; margin-top:15px;">Fotos de evidencia</p>
+            <div style="text-align:center; margin-top:5px;">
+                <div class="photo-gallery-pdf" id="out-foto-gallery-vt"></div>
+            </div>
+
+            <div style="margin-top:30px; font-weight:bold; font-size:11px;">
+                <p>Ing. Alejandro Ponce Orces<br>DIVISION INDUSTRIAL<br>Dpto. Soporte Técnico<br>Cel. 0999402936</p>
+            </div>
+
+            <div style="position:absolute; bottom:0; width:100%; font-size:9px; color:#333;">
+                <p style="margin:0;">Edificio SUNAPA, Km 3.5 Vía Durán – Boliche, Edificio Napa</p>
+                <p style="margin:0;">Teléfonos: 045099999 Durán – Ecuador</p>
+                <p style="margin:0;"><a href="http://www.napaecuador.com" style="color:blue; text-decoration:underline;">www.napaecuador.com</a></p>
+                <img src="assets/img/footer jpg.png" alt="Footer Marcas" style="width:100%; max-height:50px; object-fit:contain; margin-top:5px;">
+            </div>
+        </div>
+    </div>
+
+    <!-- PDF: OT -->
+    <div id="pdf-container-ot" style="display:none; background-color:white;">
+        <div id="pdf-content-ot" class="pdf-content">
+            <img src="assets/img/Header sunapajpg.jpg" alt="Header" style="width:100%; max-height:60px; object-fit:contain;">
+            <p style="font-weight:bold; font-size:14px; margin-top:10px;">Servicio de Mantenimiento Mecánico SUNAPA S.A. &nbsp; O/T #<span id="out-ot-numero"></span></p>
+            <p><strong>Cliente:</strong> <span id="out-ot-cliente"></span></p>
+            <p><strong>Trabajo realizado en:</strong> <span id="out-ot-trabajo-en"></span></p>
+            <p><strong>Daño o falla reportada:</strong><br><span id="out-ot-dano" style="white-space:pre-wrap;"></span></p>
+            <p><strong>Lugar / Ubicación:</strong> <span id="out-ot-lugar"></span> &nbsp;&nbsp;&nbsp; <strong>Fecha:</strong> <span id="out-ot-fecha"></span></p>
+
+            <h4 style="text-decoration:underline; margin-top:10px;">Costos</h4>
+            <div id="out-ot-cost-table"></div>
+
+            <p style="font-weight:bold; margin-top:15px;">Fotos de evidencia</p>
+            <div style="text-align:center; margin-top:5px;">
+                <div class="photo-gallery-pdf" id="out-foto-gallery-ot"></div>
+            </div>
+
+            <div style="margin-top:30px; font-weight:bold; font-size:11px;">
+                <p>Ing. Alejandro Ponce Orces<br>DIVISION INDUSTRIAL<br>Dpto. Soporte Técnico<br>Cel. 0999402936</p>
+            </div>
+
+            <div style="position:absolute; bottom:0; width:100%; font-size:9px; color:#333;">
+                <p style="margin:0;">Edificio SUNAPA, Km 3.5 Vía Durán – Boliche, Edificio Napa</p>
+                <p style="margin:0;">Teléfonos: 045099999 Durán – Ecuador</p>
+                <p style="margin:0;"><a href="http://www.napaecuador.com" style="color:blue; text-decoration:underline;">www.napaecuador.com</a></p>
+                <img src="assets/img/footer jpg.png" alt="Footer Marcas" style="width:100%; max-height:50px; object-fit:contain; margin-top:5px;">
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/pdf-generator.js"></script>
+</body>
+</html>

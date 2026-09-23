@@ -1,0 +1,10 @@
+{
+  "name": "Formularios Técnicos SUNAPA",
+  "short_name": "SUNAPA Formularios",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fffdf8",
+  "theme_color": "#0b5d57",
+  "lang": "es",
+  "icons": []
+}
