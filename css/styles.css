@@ -171,6 +171,60 @@ button {
     padding: 8px;
 }
 
+/* ---------- COSTOS OT (categorías con varias líneas) ---------- */
+.cost-category {
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 12px;
+}
+.cost-category-title {
+    font-weight: bold;
+    color: #0b5d57;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+.cost-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr auto;
+    gap: 6px;
+    margin-bottom: 6px;
+    align-items: center;
+}
+.cost-row input {
+    padding: 8px;
+    font-size: 14px;
+}
+.btn-remove-row {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+}
+.btn-add-row {
+    background-color: #0b5d57;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    margin-top: 4px;
+}
+.total-row-display {
+    text-align: right;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 10px 5px;
+    border-top: 2px solid #0b5d57;
+}
+
 /* ---------- TABLAS DE PARAMETROS / COSTOS ---------- */
 .data-table {
     width: 100%;
@@ -292,6 +346,20 @@ button {
     background-color: white;
     position: relative;
     min-height: 297mm;
+}
+
+@media (max-width: 480px) {
+    .cost-row {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "desc desc"
+            "punit ptotal"
+            "remove remove";
+    }
+    .cost-row input:nth-child(1) { grid-area: desc; }
+    .cost-row input:nth-child(2) { grid-area: punit; }
+    .cost-row input:nth-child(3) { grid-area: ptotal; }
+    .cost-row .btn-remove-row { grid-area: remove; justify-self: end; }
 }
 
 @media print {

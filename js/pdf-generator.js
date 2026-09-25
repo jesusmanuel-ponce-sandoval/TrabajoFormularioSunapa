@@ -32,19 +32,23 @@ function buildParamsOutput(prefix, params, outContainerId) {
     container.innerHTML = html;
 }
 
-function buildCostOutput(prefix, rows, outContainerId) {
+function buildOtCostOutput(outContainerId) {
     const container = document.getElementById(outContainerId);
     if (!container) return;
-    let html = '<table class="data-table" style="width:100%;border-collapse:collapse;font-size:10px;"><tr><th style="border:1px solid #999;padding:4px;">Rubro</th><th style="border:1px solid #999;padding:4px;">Detalle</th><th style="border:1px solid #999;padding:4px;">P. Unit.</th><th style="border:1px solid #999;padding:4px;">P. Total</th></tr>';
+    let html = '<table class="data-table" style="width:100%;border-collapse:collapse;font-size:10px;"><tr><th style="border:1px solid #999;padding:4px;">Rubro</th><th style="border:1px solid #999;padding:4px;">Descripción</th><th style="border:1px solid #999;padding:4px;">P. Unit.</th><th style="border:1px solid #999;padding:4px;">P. Total</th></tr>';
     let total = 0;
-    rows.forEach((label, idx) => {
-        const i = idx + 1;
-        const descEl = document.getElementById(`${prefix}-cost-${i}-desc`);
-        const punitEl = document.getElementById(`${prefix}-cost-${i}-punit`);
-        const ptotalEl = document.getElementById(`${prefix}-cost-${i}-ptotal`);
-        const ptotalVal = ptotalEl && parseFloat(ptotalEl.value) ? parseFloat(ptotalEl.value) : 0;
-        total += ptotalVal;
-        html += `<tr><td style="border:1px solid #999;padding:4px;">${label}</td><td style="border:1px solid #999;padding:4px;">${descEl && descEl.value ? descEl.value : "-"}</td><td style="border:1px solid #999;padding:4px;">${punitEl && punitEl.value ? "$" + punitEl.value : "-"}</td><td style="border:1px solid #999;padding:4px;">${ptotalEl && ptotalEl.value ? "$" + ptotalEl.value : "-"}</td></tr>`;
+    OT_CATEGORIES.forEach((catLabel, c) => {
+        const rowIds = otRows[c] || [];
+        if (rowIds.length === 0) return;
+        rowIds.forEach((rowId, idx) => {
+            const descEl = document.getElementById(`ot-cost-${c}-${rowId}-desc`);
+            const punitEl = document.getElementById(`ot-cost-${c}-${rowId}-punit`);
+            const ptotalEl = document.getElementById(`ot-cost-${c}-${rowId}-ptotal`);
+            const ptotalVal = ptotalEl && parseFloat(ptotalEl.value) ? parseFloat(ptotalEl.value) : 0;
+            total += ptotalVal;
+            const rubroCell = idx === 0 ? `<strong>${catLabel}</strong>` : "";
+            html += `<tr><td style="border:1px solid #999;padding:4px;">${rubroCell}</td><td style="border:1px solid #999;padding:4px;">${descEl && descEl.value ? descEl.value : "-"}</td><td style="border:1px solid #999;padding:4px;">${punitEl && punitEl.value ? "$" + punitEl.value : "-"}</td><td style="border:1px solid #999;padding:4px;">${ptotalEl && ptotalEl.value ? "$" + ptotalEl.value : "-"}</td></tr>`;
+        });
     });
     html += `<tr><td colspan="3" style="border:1px solid #999;padding:4px;text-align:right;"><strong>TOTAL:</strong></td><td style="border:1px solid #999;padding:4px;"><strong>$${total.toFixed(2)}</strong></td></tr>`;
     html += "</table>";
@@ -186,7 +190,7 @@ window.generarPDF_vt = function () {
 
 window.generarPDF_ot = function () {
     fillSimpleFields("ot");
-    buildCostOutput("ot", OT_COST_ROWS, "out-ot-cost-table");
+    buildOtCostOutput("out-ot-cost-table");
     fillPhotos("ot");
     abrirVentanaImpresion("ot", "Orden_de_Trabajo");
 };

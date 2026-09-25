@@ -89,29 +89,29 @@ function initSignaturePads() {
    Definiciones de checklists / tablas dinámicas por formulario
    ============================================================ */
 const ACTA_CHECKLIST = [
-    "Transporte grúa",
-    "Arreglo bases de hormigón",
-    "Cambio de pernos de anclaje chasis",
-    "Pintar con epóxico bases hormigón",
-    "Montaje y anclaje de chasis",
-    "Montaje de cardán y bridas",
-    "Nivelación y alineación de equipos",
-    "Montaje del protector cardán",
-    "Montaje del tanque de combustible",
-    "Montaje de mangueras de combustible",
-    "Montaje de filtro RACOR o similar",
-    "Montaje del sistema de escape",
-    "Montaje pedestal tablero de control",
-    "Limpieza estación de bombeo",
-    "Entrega de bolso con herramientas",
-    "Entrega del manual del operador",
-    "Entrega técnica",
-    "Prueba funcionamiento c/carga y parámetros registrados"
+    "Transporte Grúa",
+    "Arreglo Bases de Hormigón",
+    "Cambio de Pernos de Anclaje Chasis",
+    "Pintar con Epóxico Bases Hormigón",
+    "Montaje y Anclaje de Chasis",
+    "Montaje de Cardán y Bridas",
+    "Nivelación y Alineación de Equipos",
+    "Montaje del Protector Cardán",
+    "Montaje del Tanque de Combustible",
+    "Montaje de Mangueras de Combustible",
+    "Montaje de Filtro RACOR o Similar",
+    "Montaje del Sistema de Escape",
+    "Montaje Pedestal Tablero de Control",
+    "Limpieza Estación de Bombeo",
+    "Entrega de Bolso con Herramientas",
+    "Entrega del Manual del Operador",
+    "Entrega Técnica",
+    "Prueba Funcionamiento c/Carga y Parámetros Registrados"
 ];
 
 const ACTA_PARAMS = [
-    { label: "RPM", ref: "900 / 2,070" },
     { label: "Horómetro", ref: "H/T" },
+    { label: "RPM", ref: "900 / 2,070" },
     { label: "Presión aceite motor", ref: "15 Psi / 75 Psi" },
     { label: "Temp. aceite motor", ref: "Máx 108°C" },
     { label: "Temp. refrigerante (manómetro)", ref: "Máx 98°C" },
@@ -122,19 +122,100 @@ const ACTA_PARAMS = [
 ];
 
 const PREVIO_CHECKLIST = [
-    "Tanque de combustible limpio",
-    "Mangueras de combustible ajustadas y sin fugas",
-    "Filtro RACOR limpio, mangueras ajustadas y sin fugas",
-    "Sistema de escape de gases libre y sin restricciones",
-    "Sistema de admisión de aire libre y sin restricciones",
-    "Flujo de aire del ventilador al radiador libre y sin restricciones",
-    "Anclaje del motor sin pernos flojos",
-    "Acoples, poleas y bandas alineados",
-    "Cardán con holgura necesaria (10mm x ml)",
-    "Cubierta de la estación de bombeo instalada y en buen estado"
+    "Tanque de Combustible Limpio",
+    "Mangueras de Combustible Ajustadas y sin Fugas",
+    "Filtro RACOR Limpio, Mangueras Ajustadas y sin Fugas",
+    "Sistema de Escape de Gases Libre y sin Restricciones",
+    "Sistema de Admisión de Aire Libre y sin Restricciones",
+    "Flujo de Aire del Ventilador al Radiador Libre y sin Restricciones",
+    "Anclaje del Motor sin Pernos Flojos",
+    "Acoples, Poleas y Bandas Alineados",
+    "Cardán con Holgura Necesaria (10mm x ml)",
+    "Cubierta de la Estación de Bombeo Instalada y en Buen Estado"
 ];
 
-const OT_COST_ROWS = ["Mano de Obra", "Repuestos", "Materiales / Insumos", "Movilización"];
+const OT_CATEGORIES = ["Mano de Obra", "Repuestos", "Materiales / Insumos", "Movilización"];
+
+/* Estado de las líneas de costo de la Orden de Trabajo: un arreglo de
+   arreglos de ids de fila, uno por categoría. Permite varias líneas por
+   categoría (ej. varios tipos de repuestos). */
+let otRowCounter = 0;
+let otRows = [];
+
+function initOtRows() {
+    otRowCounter = 0;
+    otRows = OT_CATEGORIES.map(() => {
+        otRowCounter++;
+        return [otRowCounter];
+    });
+}
+
+function createOtRow(c, rowId) {
+    const div = document.createElement("div");
+    div.className = "cost-row";
+    div.id = `ot-row-${c}-${rowId}`;
+    div.innerHTML = `
+        <input type="text" id="ot-cost-${c}-${rowId}-desc" placeholder="Descripción">
+        <input type="number" step="0.01" id="ot-cost-${c}-${rowId}-punit" placeholder="P. Unit.">
+        <input type="number" step="0.01" id="ot-cost-${c}-${rowId}-ptotal" placeholder="P. Total" class="cost-total-input">
+        <button type="button" class="btn-remove-row" title="Quitar línea">&times;</button>
+    `;
+    div.querySelector(".cost-total-input").addEventListener("input", updateOtTotal);
+    div.querySelector(".btn-remove-row").addEventListener("click", () => {
+        div.remove();
+        otRows[c] = otRows[c].filter(id => id !== rowId);
+        updateOtTotal();
+    });
+    return div;
+}
+
+function renderOtCostTable() {
+    const container = document.getElementById("ot-cost-inputs");
+    if (!container) return;
+    container.innerHTML = "";
+
+    OT_CATEGORIES.forEach((catLabel, c) => {
+        const catDiv = document.createElement("div");
+        catDiv.className = "cost-category";
+        catDiv.innerHTML = `<div class="cost-category-title">${catLabel}</div><div class="cost-rows" id="ot-cat-${c}-rows"></div>`;
+        container.appendChild(catDiv);
+
+        const rowsContainer = catDiv.querySelector(".cost-rows");
+        otRows[c].forEach(rowId => rowsContainer.appendChild(createOtRow(c, rowId)));
+
+        const addBtn = document.createElement("button");
+        addBtn.type = "button";
+        addBtn.className = "btn-add-row";
+        addBtn.textContent = `+ Añadir línea de ${catLabel}`;
+        addBtn.addEventListener("click", () => {
+            otRowCounter++;
+            const newId = otRowCounter;
+            otRows[c].push(newId);
+            rowsContainer.appendChild(createOtRow(c, newId));
+        });
+        catDiv.appendChild(addBtn);
+    });
+
+    const totalDiv = document.createElement("div");
+    totalDiv.className = "total-row-display";
+    totalDiv.innerHTML = `TOTAL: <span id="ot-total-display">$0.00</span>`;
+    container.appendChild(totalDiv);
+
+    updateOtTotal();
+}
+
+function updateOtTotal() {
+    let total = 0;
+    OT_CATEGORIES.forEach((_, c) => {
+        (otRows[c] || []).forEach(rowId => {
+            const el = document.getElementById(`ot-cost-${c}-${rowId}-ptotal`);
+            const val = el && parseFloat(el.value);
+            if (!isNaN(val)) total += val;
+        });
+    });
+    const display = document.getElementById("ot-total-display");
+    if (display) display.textContent = "$" + total.toFixed(2);
+}
 
 /* ============================================================
    Render de checklist (Sí / No / N-A + observaciones)
@@ -180,41 +261,6 @@ function renderParams(containerId, prefix, params) {
 }
 
 /* ============================================================
-   Render de tabla de costos (Descripción / Detalle / P.Unit / P.Total)
-   ============================================================ */
-function renderCostTable(containerId, prefix, rows) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    let html = `<table class="data-table"><tr><th>Rubro</th><th>Detalle</th><th>P. Unit.</th><th>P. Total</th></tr>`;
-    rows.forEach((label, idx) => {
-        const i = idx + 1;
-        html += `<tr>
-            <td>${label}</td>
-            <td><input type="text" id="${prefix}-cost-${i}-desc"></td>
-            <td><input type="number" step="0.01" id="${prefix}-cost-${i}-punit"></td>
-            <td><input type="number" step="0.01" id="${prefix}-cost-${i}-ptotal" class="cost-total-input" data-prefix="${prefix}"></td>
-        </tr>`;
-    });
-    html += `<tr class="total-row"><td colspan="3" style="text-align:right;">TOTAL:</td><td id="${prefix}-total-display">$0.00</td></tr></table>`;
-    container.innerHTML = html;
-
-    container.querySelectorAll(".cost-total-input").forEach(input => {
-        input.addEventListener("input", () => updateCostTotal(prefix, rows.length));
-    });
-}
-
-function updateCostTotal(prefix, rowCount) {
-    let total = 0;
-    for (let i = 1; i <= rowCount; i++) {
-        const el = document.getElementById(`${prefix}-cost-${i}-ptotal`);
-        const val = el && parseFloat(el.value);
-        if (!isNaN(val)) total += val;
-    }
-    const display = document.getElementById(`${prefix}-total-display`);
-    if (display) display.textContent = "$" + total.toFixed(2);
-}
-
-/* ============================================================
    Navegación entre vistas
    ============================================================ */
 function showView(id) {
@@ -245,6 +291,11 @@ function guardarBorrador(formId) {
 
     data.__fotos = fotoData[formId] || [];
 
+    if (formId === "ot") {
+        data.__otRows = otRows;
+        data.__otRowCounter = otRowCounter;
+    }
+
     const firmas = {};
     container.querySelectorAll("canvas.signature-pad").forEach(canvas => {
         if (signatureData[canvas.id]) firmas[canvas.id] = signatureData[canvas.id];
@@ -267,6 +318,13 @@ function cargarBorrador(formId) {
     const container = document.getElementById("view-" + formId);
     if (!container) return;
 
+    /* reconstruir las líneas dinámicas de costos de la OT antes de rellenar valores */
+    if (formId === "ot" && data.__otRows) {
+        otRows = data.__otRows;
+        otRowCounter = data.__otRowCounter || otRowCounter;
+        renderOtCostTable();
+    }
+
     container.querySelectorAll("input, textarea, select").forEach(el => {
         if (el.type === "radio") {
             const saved = data["radio:" + el.name];
@@ -279,7 +337,7 @@ function cargarBorrador(formId) {
     });
 
     /* recalcular total de costos si aplica */
-    if (formId === "ot") updateCostTotal("ot", OT_COST_ROWS.length);
+    if (formId === "ot") updateOtTotal();
 
     if (data.__fotos && Array.isArray(data.__fotos)) {
         fotoData[formId] = data.__fotos;
@@ -309,7 +367,10 @@ function limpiarFormulario(formId) {
         formEl.querySelectorAll("canvas.signature-pad").forEach(canvas => clearSignature(canvas.id));
     }
 
-    if (formId === "ot") updateCostTotal("ot", OT_COST_ROWS.length);
+    if (formId === "ot") {
+        initOtRows();
+        renderOtCostTable();
+    }
 }
 
 /* ============================================================
@@ -384,7 +445,8 @@ document.addEventListener("DOMContentLoaded", () => {
     renderChecklist("acta-checklist-inputs", "acta", ACTA_CHECKLIST);
     renderParams("acta-params-inputs", "acta", ACTA_PARAMS);
     renderChecklist("previo-checklist-inputs", "previo", PREVIO_CHECKLIST);
-    renderCostTable("ot-cost-inputs", "ot", OT_COST_ROWS);
+    initOtRows();
+    renderOtCostTable();
 
     /* Navegación */
     document.querySelectorAll("[data-target]").forEach(btn => {
